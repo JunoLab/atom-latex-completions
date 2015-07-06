@@ -18,7 +18,7 @@ module.exports =
   getSuggestions: ({bufferPosition, editor}) ->
     line = editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])
     prefix = line.match(texPattern)?[0]
-    prefix? && ({text: word} for word, char of @completions)
+    prefix? && ({text: word, leftLabel: char} for word, char of @completions)
 
   onDidInsertSuggestion: ({editor, triggerPosition, suggestion}) ->
     word = suggestion.text
