@@ -4,7 +4,7 @@ path = require 'path'
 texPattern = /\\[\w]*$/
 
 module.exports =
-  selector: '.source.coffee, .source.js'
+  selector: '.source, .text'
   filterSuggestions: true
   inclusionPriority: 5
 
