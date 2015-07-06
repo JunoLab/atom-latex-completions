@@ -22,6 +22,5 @@ module.exports =
 
   onDidInsertSuggestion: ({editor, triggerPosition, suggestion}) ->
     word = suggestion.text
-    console.log word
     editor.selectLeft(word.length + 1)
     editor.insertText(@completions[word])
