@@ -5,7 +5,7 @@
   "description": "Easy input for unicode characters",
   "keywords": [
   ],
-  "repository": "https://github.com/one-more-minute/atom-latex-completions",
+  "repository": "https://github.com/JunoLab/atom-latex-completions",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
