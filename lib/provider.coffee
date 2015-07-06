@@ -1,24 +1,27 @@
-texPattern = /\\[\w]*$/
+fs = require 'fs'
+path = require 'path'
 
-completions =
-  alpha: 'α'
-  beta: 'β'
+texPattern = /\\[\w]*$/
 
 module.exports =
   selector: '.source.coffee, .source.js'
   filterSuggestions: true
-  inclusionPriority: 6
-  # excludeLowerPriority: true
+  inclusionPriority: 5
+
+  completions: []
+
+  load: ->
+    fs.readFile path.resolve(__dirname, '..', 'completions', 'completions.json'), (error, content) =>
+      return if error?
+      @completions = JSON.parse(content)
 
   getSuggestions: ({bufferPosition, editor}) ->
     line = editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])
     prefix = line.match(texPattern)?[0]
-    if prefix?
-      [{text: 'alpha'}, {text: 'beta'}]
-    else
-      []
+    prefix? && ({text: word} for word, char of @completions)
 
   onDidInsertSuggestion: ({editor, triggerPosition, suggestion}) ->
     word = suggestion.text
+    console.log word
     editor.selectLeft(word.length + 1)
-    editor.insertText(completions[word])
+    editor.insertText(@completions[word])
