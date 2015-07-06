@@ -1,0 +1,22 @@
+{
+  "name": "latex-completions",
+  "main": "./lib/latex-completions",
+  "version": "0.0.0",
+  "description": "Provides easy input for unicode characters",
+  "keywords": [
+  ],
+  "repository": "https://github.com/one-more-minute/atom-latex-completions",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "2.0.0": "provide"
+      }
+    }
+  },
+  "dependencies": {
+  }
+}
