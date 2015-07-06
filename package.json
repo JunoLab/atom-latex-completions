@@ -1,10 +1,9 @@
 {
   "name": "latex-completions",
   "main": "./lib/latex-completions",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Easy input for unicode characters",
-  "keywords": [
-  ],
+  "keywords": [],
   "repository": "https://github.com/JunoLab/atom-latex-completions",
   "license": "MIT",
   "engines": {
@@ -17,6 +16,5 @@
       }
     }
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
