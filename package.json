@@ -1,5 +1,5 @@
 {
-  "name": "Latex Completions",
+  "name": "latex-completions",
   "main": "./lib/latex-completions",
   "version": "0.0.0",
   "description": "Easy input for unicode characters",
