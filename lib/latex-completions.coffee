@@ -1,4 +1,3 @@
-
 {CompositeDisposable} = require 'atom'
 provider = require './provider'
 
@@ -17,9 +16,6 @@ module.exports =
     provider.load()
 
     @subscriptions = new CompositeDisposable
-
-    @subscriptions.add atom.config.observe 'latex-completions.selector', (selector) =>
-      provider.selector = selector
 
     @subscriptions.add atom.config.observe 'latex-completions.customAliases', (path) =>
       provider.load(path)

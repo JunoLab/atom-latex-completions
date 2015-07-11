@@ -11,6 +11,7 @@ module.exports =
   completions: {}
 
   load: (p) ->
+    @selector = atom.config.get("latex-completions.selector")
     return if p == ''
     p ?= path.resolve(__dirname, '..', 'completions', 'completions.json')
     fs.readFile p, (error, content) =>
