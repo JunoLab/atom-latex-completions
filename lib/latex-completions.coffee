@@ -3,6 +3,10 @@ provider = require './provider'
 
 module.exports =
   config:
+    enableDefaultCompletions:
+      type: 'boolean'
+      default: true
+      description: 'Disable this to use only custom completions.'
     customAliases:
       type: 'string'
       default: ''
@@ -13,7 +17,7 @@ module.exports =
       description: 'Enable completions under these scopes:'
 
   activate: ->
-    provider.load()
+    atom.config.get("latex-completions.enableDefaultCompletions") && provider.load()
 
     @subscriptions = new CompositeDisposable
 
