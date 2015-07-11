@@ -10,7 +10,7 @@ module.exports =
     customAliases:
       type: 'string'
       default: ''
-      description: 'Path to a custom set of completions.'
+      description: 'Path to a custom set of completions. Multiple paths may be comma-seperated.'
     selector:
       type: 'string'
       default: '.source, .text'
@@ -22,7 +22,8 @@ module.exports =
     @subscriptions = new CompositeDisposable
 
     @subscriptions.add atom.config.observe 'latex-completions.customAliases', (path) =>
-      provider.load(path)
+      for path in path.split(',')
+        provider.load(path)
 
   provide: -> provider
 
