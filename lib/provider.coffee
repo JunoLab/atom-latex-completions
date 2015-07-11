@@ -8,12 +8,15 @@ module.exports =
   filterSuggestions: true
   inclusionPriority: 5
 
-  completions: []
+  completions: {}
 
-  load: ->
-    fs.readFile path.resolve(__dirname, '..', 'completions', 'completions.json'), (error, content) =>
+  load: (p) ->
+    return if p == ''
+    p ?= path.resolve(__dirname, '..', 'completions', 'completions.json')
+    fs.readFile p, (error, content) =>
       return if error?
-      @completions = JSON.parse(content)
+      for name, char of JSON.parse(content)
+        @completions[name] = char
 
   getSuggestions: ({bufferPosition, editor}) ->
     line = editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])
