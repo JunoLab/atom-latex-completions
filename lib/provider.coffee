@@ -1,14 +1,14 @@
 fs = require 'fs'
 path = require 'path'
 
-texPattern = /\\[\w]*$/
-
 module.exports =
   selector: '.source, .text'
   filterSuggestions: true
   inclusionPriority: 5
 
   completions: {}
+
+  texPattern: /\\([\w\d^-]*)$/
 
   load: (p) ->
     @selector = atom.config.get("latex-completions.selector")
@@ -21,8 +21,8 @@ module.exports =
 
   getSuggestions: ({bufferPosition, editor}) ->
     line = editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])
-    prefix = line.match(texPattern)?[0]
-    prefix? && ({text: word, leftLabel: char} for word, char of @completions)
+    prefix = line.match(@texPattern)?[1]
+    prefix? && ({text: word, leftLabel: char, prefix: prefix} for word, char of @completions)
 
   onDidInsertSuggestion: ({editor, triggerPosition, suggestion}) ->
     word = suggestion.text
