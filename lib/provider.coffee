@@ -4,7 +4,7 @@ path = require 'path'
 module.exports =
   selector: '.source, .text'
   filterSuggestions: true
-  inclusionPriority: 5
+  suggestionPriority: 5
 
   completions: {}
 
