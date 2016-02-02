@@ -5,6 +5,7 @@ module.exports =
   selector: '.source, .text'
   filterSuggestions: true
   suggestionPriority: 5
+  inclusionPriority: 5
 
   completions: {}
 
