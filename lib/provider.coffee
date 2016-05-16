@@ -2,7 +2,6 @@ fs = require 'fs'
 path = require 'path'
 
 module.exports =
-  selector: '.source, .text'
   filterSuggestions: true
   suggestionPriority: 5
   inclusionPriority: 5
@@ -13,6 +12,7 @@ module.exports =
 
   load: (p) ->
     @selector = atom.config.get("latex-completions.selector")
+    @disableForSelector = atom.config.get("latex-completions.disableForSelector")
     return if p == ''
     p ?= path.resolve(__dirname, '..', 'completions', 'completions.json')
     fs.readFile p, (error, content) =>

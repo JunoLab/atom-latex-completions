@@ -3,18 +3,26 @@ provider = require './provider'
 
 module.exports =
   config:
-    enableDefaultCompletions:
-      type: 'boolean'
-      default: true
-      description: 'Disable this to use only custom completions.'
     customAliases:
       type: 'string'
       default: ''
       description: 'Path to a custom set of completions. Multiple paths may be comma-seperated.'
+      order: 1
+    enableDefaultCompletions:
+      type: 'boolean'
+      default: true
+      description: 'Disable this to use only custom completions.'
+      order: 2
     selector:
       type: 'string'
       default: '.source, .text'
       description: 'Enable completions under these scopes:'
+      order: 3
+    disableForSelector:
+      type: 'string'
+      default: '.tex, .latex'
+      description: 'Disable completions under these scopes:'
+      order: 4
 
   activate: ->
     atom.config.get("latex-completions.enableDefaultCompletions") && provider.load()
