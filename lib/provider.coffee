@@ -6,13 +6,16 @@ module.exports =
   suggestionPriority: 5
   inclusionPriority: 5
 
+  textEditorSelectors: 'atom-text-editor'
+  getTextEditorSelector: -> @textEditorSelectors
+
   completions: {}
 
   texPattern: /\\([\w\d^-]*)$/
 
   load: (p) ->
-    @selector = atom.config.get("latex-completions.selector")
-    @disableForSelector = atom.config.get("latex-completions.disableForSelector")
+    @scopeSelector = atom.config.get("latex-completions.selector")
+    @disableForScopeSelector = atom.config.get("latex-completions.disableForSelector")
     return if p == ''
     p ?= path.resolve(__dirname, '..', 'completions', 'completions.json')
     fs.readFile p, (error, content) =>
