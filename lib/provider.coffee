@@ -1,5 +1,6 @@
 fs = require 'fs'
 path = require 'path'
+score = require 'string-score'
 
 module.exports =
   filterSuggestions: true
@@ -26,7 +27,8 @@ module.exports =
   getSuggestions: ({bufferPosition, editor}) ->
     line = editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])
     prefix = line.match(@texPattern)?[1]
-    prefix? && ({text: word, leftLabel: char, replacementPrefix: prefix} for word, char of @completions)
+    if prefix?
+      ({text, leftLabel, replacementPrefix: prefix, score: score(text, prefix)} for text, leftLabel of @completions).sort (c) -> c.score
 
   onDidInsertSuggestion: ({editor, triggerPosition, suggestion}) ->
     word = suggestion.text
