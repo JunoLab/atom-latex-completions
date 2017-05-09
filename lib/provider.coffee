@@ -12,7 +12,7 @@ module.exports =
 
   completions: {}
 
-  texPattern: /\\([\w\d^-]*)$/
+  texPattern: /(\\[\w\d^-]*)$/
 
   load: (p) ->
     @scopeSelector = atom.config.get("latex-completions.selector")
@@ -22,7 +22,7 @@ module.exports =
     fs.readFile p, (error, content) =>
       return if error?
       for name, char of JSON.parse(content)
-        @completions[name] = char
+        @completions["\\" + name] = char
 
   getSuggestions: ({bufferPosition, editor}) ->
     line = editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])
