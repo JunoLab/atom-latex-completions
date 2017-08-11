@@ -12,7 +12,7 @@ module.exports =
 
   completions: {}
 
-  texPattern: /\\([\w\d^-]*)$/
+  texPattern: /\\(.*)$/
 
   load: (p) ->
     @scopeSelector = atom.config.get("latex-completions.selector")
