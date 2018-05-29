@@ -17,6 +17,6 @@
     }
   },
   "dependencies": {
-    "string-score": "*"
+    "fuzzaldrin-plus": "^0.6.0"
   }
 }

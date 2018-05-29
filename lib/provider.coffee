@@ -1,9 +1,10 @@
 fs = require 'fs'
 path = require 'path'
 score = require 'string-score'
+fuzzaldrinPlus = require 'fuzzaldrin-plus'
 
 module.exports =
-  filterSuggestions: true
+  filterSuggestions: false
   suggestionPriority: 5
   inclusionPriority: 5
 
@@ -12,7 +13,14 @@ module.exports =
 
   completions: {}
 
-  texPattern: /\\(.*)$/
+  texPattern: /\\([^\\]*)$/
+
+  activate: ->
+    @disposable = atom.config.observe 'latex-completions.boostGreekCharacters', (boost) =>
+      @boostGreek = boost
+
+  deactivate: ->
+    @disposable.dispose()
 
   load: (p) ->
     @scopeSelector = atom.config.get("latex-completions.selector")
@@ -24,11 +32,28 @@ module.exports =
       for name, char of JSON.parse(content)
         @completions[name] = char
 
-  getSuggestions: ({bufferPosition, editor}) ->
+  score: (a, b, symbol) ->
+    s = fuzzaldrinPlus.score(a, b)
+    if @boostGreek && /[Α-ϵ]/.test(symbol)
+      s = s * 1.4
+    s
+
+  compare: (a, b) ->
+    diff = b.score - a.score
+
+    if diff == 0
+      a.leftLabel.localeCompare(b.leftLabel)
+    else
+      diff
+
+  getSuggestions: ({bufferPosition, editor, prefix}) ->
     line = editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])
     prefix = line.match(@texPattern)?[1]
-    if prefix?
-      ({text, leftLabel, replacementPrefix: prefix, score: score(text, prefix)} for text, leftLabel of @completions).sort (c) -> c.score
+    return new Promise (resolve) =>
+      if prefix?
+        resolve(({text, leftLabel, replacementPrefix: prefix, score: @score(text, prefix, leftLabel)} for text, leftLabel of @completions).sort(@compare))
+      else
+        resolve([])
 
   onDidInsertSuggestion: ({editor, triggerPosition, suggestion}) ->
     word = suggestion.text
