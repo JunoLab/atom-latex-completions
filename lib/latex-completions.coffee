@@ -23,9 +23,15 @@ module.exports =
       default: '.tex, .latex'
       description: 'Disable completions under these scopes:'
       order: 4
+    boostGreekCharacters:
+      type: 'boolean'
+      default: true
+      description: 'Make common greek characters easier to complete by moving them higher in the list of completions.'
 
   activate: ->
     atom.config.get("latex-completions.enableDefaultCompletions") && provider.load()
+
+    provider.activate()
 
     @subscriptions = new CompositeDisposable
 
@@ -37,3 +43,4 @@ module.exports =
 
   deactivate: ->
     @subscriptions.dispose()
+    provider.deactivate()
