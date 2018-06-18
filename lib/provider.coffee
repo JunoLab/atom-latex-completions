@@ -1,6 +1,5 @@
 fs = require 'fs'
 path = require 'path'
-score = require 'string-score'
 fuzzaldrinPlus = require 'fuzzaldrin-plus'
 
 module.exports =
