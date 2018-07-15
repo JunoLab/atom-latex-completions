@@ -12,7 +12,7 @@ module.exports =
 
   completions: {}
 
-  texPattern: /\\([^\\]*)$/
+  texPattern: /\\([\w:_\^]*)$/
 
   activate: ->
     @disposable = atom.config.observe 'latex-completions.boostGreekCharacters', (boost) =>
