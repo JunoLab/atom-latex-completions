@@ -35,6 +35,7 @@ module.exports =
     s = fuzzaldrinPlus.score(a, b)
     if @boostGreek && /[Α-ϵ]/.test(symbol)
       s = s * 1.4
+      s = s + 0.001
     s
 
   compare: (a, b) ->
@@ -50,11 +51,6 @@ module.exports =
     prefix = line.match(@texPattern)?[1]
     return new Promise (resolve) =>
       if prefix?
-        resolve(({text, leftLabel, replacementPrefix: prefix, score: @score(text, prefix, leftLabel)} for text, leftLabel of @completions).sort(@compare))
+        resolve(({text: @completions[text], displayText: text, leftLabel, replacementPrefix: '\\'+prefix, score: @score(text, prefix, leftLabel)} for text, leftLabel of @completions).sort(@compare))
       else
         resolve([])
-
-  onDidInsertSuggestion: ({editor, triggerPosition, suggestion}) ->
-    word = suggestion.text
-    editor.selectLeft(word.length + 1)
-    editor.insertText(@completions[word])
