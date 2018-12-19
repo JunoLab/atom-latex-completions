@@ -6,6 +6,7 @@ module.exports =
   filterSuggestions: false
   suggestionPriority: 5
   inclusionPriority: 5
+  excludeLowerPriority: true
 
   textEditorSelectors: 'atom-text-editor'
   getTextEditorSelector: -> @textEditorSelectors
